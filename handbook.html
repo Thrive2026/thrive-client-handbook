@@ -1,0 +1,1245 @@
+<title>Thrive Client Handbook</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg: #f4f5fa;
+    --surface: #ffffff;
+    --surface-raised: #ffffff;
+    --ink: #1c2333;
+    --ink-soft: #4d546c;
+    --ink-faint: #7d84a0;
+    --accent: #384fa0;
+    --accent-strong: #26346e;
+    --accent-soft: #e7eaf7;
+    --gold: #c9930a;
+    --gold-soft: #fbf0d2;
+    --leaf-green: #2f9a3b;
+    --leaf-pink: #c13684;
+    --line: #dcdfe9;
+    --crisis: #a83f28;
+    --crisis-bg: #f9e8e2;
+    --crisis-line: #dcb3a3;
+    --tbd: #93611c;
+    --tbd-bg: #f7edd8;
+    --tbd-line: #d9bd84;
+    --shadow: 0 1px 2px rgba(28,35,51,0.06), 0 8px 24px -12px rgba(28,35,51,0.18);
+    --focus: #1d6b8f;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #10131d;
+      --surface: #161a27;
+      --surface-raised: #1c2233;
+      --ink: #eceef5;
+      --ink-soft: #aeb4c9;
+      --ink-faint: #7d84a0;
+      --accent: #92a5ea;
+      --accent-strong: #b9c6f2;
+      --accent-soft: #212a45;
+      --gold: #f0c33e;
+      --gold-soft: #35290f;
+      --leaf-green: #6fd37a;
+      --leaf-pink: #ea7ec0;
+      --line: #2b3149;
+      --crisis: #e08a6f;
+      --crisis-bg: #3a2620;
+      --crisis-line: #5c3a30;
+      --tbd: #e8c077;
+      --tbd-bg: #382c17;
+      --tbd-line: #5c4626;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+      --focus: #7ecbe8;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #10131d;
+    --surface: #161a27;
+    --surface-raised: #1c2233;
+    --ink: #eceef5;
+    --ink-soft: #aeb4c9;
+    --ink-faint: #7d84a0;
+    --accent: #92a5ea;
+    --accent-strong: #b9c6f2;
+    --accent-soft: #212a45;
+    --gold: #f0c33e;
+    --gold-soft: #35290f;
+    --leaf-green: #6fd37a;
+    --leaf-pink: #ea7ec0;
+    --line: #2b3149;
+    --crisis: #e08a6f;
+    --crisis-bg: #3a2620;
+    --crisis-line: #5c3a30;
+    --tbd: #e8c077;
+    --tbd-bg: #382c17;
+    --tbd-line: #5c4626;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+    --focus: #7ecbe8;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 16.5px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: var(--accent-strong); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:hover{ color: var(--gold); }
+  a:focus-visible, button:focus-visible, summary:focus-visible{
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .skip-link{
+    position: absolute; left: -999px; top: 0;
+    background: var(--surface-raised); color: var(--ink);
+    padding: 0.6em 1em; z-index: 100; border-radius: 0 0 6px 0;
+  }
+  .skip-link:focus{ left: 0; }
+
+  h1, h2, h3, h4{
+    font-family: "Fraunces", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    color: var(--ink);
+    text-wrap: balance;
+    line-height: 1.18;
+    margin: 0;
+  }
+
+  .eyebrow{
+    font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.6em;
+  }
+
+  /* ---------- shell layout ---------- */
+  .shell{
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 260px minmax(0,1fr);
+    gap: 0;
+  }
+  @media (max-width: 900px){
+    .shell{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------- cover header ---------- */
+  .cover{
+    padding: 4rem 2rem 3rem;
+    border-bottom: 1px solid var(--line);
+    background:
+      radial-gradient(1100px 320px at 12% -20%, var(--accent-soft), transparent 60%),
+      var(--bg);
+  }
+  .cover-inner{ max-width: 1180px; margin: 0 auto; }
+  .brandmark{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  .brand-icon{
+    height: 38px;
+    width: auto;
+    display: block;
+  }
+  .wordmark{
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--accent-strong);
+    letter-spacing: 0.01em;
+  }
+  .wordmark .dot{ color: var(--gold); font-size: 1.4rem; line-height: 0; }
+  .cover h1{
+    font-size: clamp(2.1rem, 4.6vw, 3.2rem);
+    margin-top: 1.1rem;
+    max-width: 16ch;
+  }
+  .cover .tagline{
+    font-family: "Fraunces", serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ink-soft);
+    font-size: 1.15rem;
+    margin-top: 0.6rem;
+  }
+  .cover-meta{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-top: 1.6rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+  }
+  .cover-meta span{
+    background: var(--surface-raised);
+    border: 1px solid var(--line);
+    padding: 0.35em 0.75em;
+    border-radius: 999px;
+  }
+  .print-btn{
+    margin-top: 1.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font: inherit;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--surface);
+    background: var(--accent-strong);
+    border: 1px solid var(--accent-strong);
+    padding: 0.7em 1.2em;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+  .print-btn:hover{ background: var(--accent); transform: translateY(-1px); }
+
+  /* ---------- sidebar / toc ---------- */
+  .side{
+    padding: 2.5rem 1.5rem 2.5rem 2rem;
+    border-right: 1px solid var(--line);
+  }
+  @media (max-width: 900px){
+    .side{ border-right: none; border-bottom: 1px solid var(--line); padding: 1.5rem 2rem; }
+  }
+  .side-sticky{ position: sticky; top: 1.5rem; }
+  @media (max-width: 900px){ .side-sticky{ position: static; } }
+
+  .toc-title{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 0.9rem;
+  }
+  nav.toc ol{
+    list-style: none;
+    margin: 0; padding: 0;
+    counter-reset: toc;
+    display: flex; flex-direction: column;
+    gap: 0.15rem;
+  }
+  nav.toc li{ counter-increment: toc; }
+  nav.toc a{
+    display: flex;
+    gap: 0.65em;
+    align-items: baseline;
+    padding: 0.4em 0.5em;
+    border-radius: 6px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 0.88rem;
+    line-height: 1.35;
+  }
+  nav.toc a::before{
+    content: counter(toc, decimal-leading-zero);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+  nav.toc a:hover{ background: var(--accent-soft); color: var(--ink); }
+  nav.toc .toc-ack a::before{ content: "—"; }
+
+  details.toc-mobile{ display: none; }
+  @media (max-width: 900px){
+    details.toc-mobile{ display: block; }
+    details.toc-mobile summary{
+      cursor: pointer;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-strong);
+      padding: 0.3em 0;
+    }
+  }
+
+  /* ---------- main content ---------- */
+  main{ padding: 3rem 2rem 6rem; min-width: 0; }
+  .prose{ max-width: 680px; }
+
+  section.doc-section{
+    padding-top: 2.6rem;
+    margin-top: 2.6rem;
+    border-top: 1px solid var(--line);
+  }
+  section.doc-section:first-of-type{ border-top: none; margin-top: 0.5rem; }
+
+  section.doc-section h2{ font-size: 1.65rem; max-width: 26ch; }
+  .applies-all{
+    display: inline-block;
+    margin-top: 0.7rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+    background: var(--accent-soft);
+    padding: 0.3em 0.7em;
+    border-radius: 4px;
+  }
+
+  h3.sub{ font-size: 1.15rem; margin-top: 2rem; margin-bottom: 0.7rem; color: var(--accent-strong); }
+  h4.subsub{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.76rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p{ margin: 0.9em 0; color: var(--ink); }
+  .lede{ font-size: 1.08rem; color: var(--ink-soft); }
+
+  ul.plain, ol.plain{ margin: 0.8em 0; padding-left: 1.3em; }
+  ul.plain li, ol.plain li{ margin: 0.45em 0; padding-left: 0.2em; }
+  ul.plain > li::marker{ color: var(--gold); }
+
+  strong{ color: var(--ink); font-weight: 600; }
+  em{ color: var(--ink-soft); }
+
+  /* ---------- service line cards ---------- */
+  .service-glance{ margin: 1.6rem 0 2rem; }
+  .service-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 100%;
+  }
+  @media (max-width: 720px){ .service-grid{ grid-template-columns: 1fr; } }
+  .service-card{
+    background: var(--surface-raised);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--leaf-green);
+    border-radius: 8px;
+    padding: 1.3rem 1.2rem;
+    box-shadow: var(--shadow);
+  }
+  .service-card:nth-child(2){ border-top-color: var(--leaf-pink); }
+  .service-card:nth-child(3){ border-top-color: var(--gold); }
+  .service-card h4.card-title{
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--ink);
+    margin: 0 0 0.9rem;
+  }
+  .service-card .field{ margin-top: 0.9rem; }
+  .service-card .field:first-of-type{ margin-top: 0; }
+  .service-card .field-label{
+    display: block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.3em;
+  }
+  .service-card .field-body{ font-size: 0.92rem; color: var(--ink-soft); margin: 0; line-height: 1.5; }
+
+  /* ---------- provides / does-not two-up ---------- */
+  .twoup{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin: 1.2rem 0 1.6rem;
+  }
+  @media (max-width: 640px){ .twoup{ grid-template-columns: 1fr; } }
+  .panel{ border-radius: 8px; padding: 1.1rem 1.2rem 1.2rem; }
+  .panel.yes{ background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line)); }
+  .panel.no{ background: var(--surface); border: 1px solid var(--line); }
+  .panel-head{
+    display: flex; align-items: center; gap: 0.5em;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.6em;
+  }
+  .panel.yes .panel-head{ color: var(--accent-strong); }
+  .panel.no .panel-head{ color: var(--ink-faint); }
+  .panel ul{ margin: 0; padding-left: 1.15em; }
+  .panel li{ margin: 0.4em 0; font-size: 0.94rem; }
+  .panel.yes li::marker{ content: "＋  "; color: var(--accent-strong); }
+  .panel.no li::marker{ content: "－  "; color: var(--ink-faint); }
+
+  /* ---------- expectation stat blocks ---------- */
+  .expect-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 1.2rem 0 1.6rem;
+  }
+  .expect-block{
+    border-left: 2px solid var(--gold);
+    padding: 0.2rem 0 0.2rem 1rem;
+  }
+  .expect-block h4{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 0.5em;
+  }
+  .expect-block ul{ margin: 0; padding-left: 1.05em; font-size: 0.93rem; color: var(--ink-soft); }
+  .expect-block li{ margin: 0.35em 0; }
+  .expect-block p{ margin: 0; font-size: 0.93rem; color: var(--ink-soft); }
+
+  /* ---------- principle grid (peer support) ---------- */
+  .principle-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.9rem;
+    margin: 1.4rem 0 1.8rem;
+  }
+  @media (max-width: 640px){ .principle-grid{ grid-template-columns: 1fr; } }
+  .principle{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+  }
+  .principle .p-title{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.07em;
+    color: var(--accent-strong);
+    display: block;
+    margin-bottom: 0.4em;
+  }
+  .principle p{ margin: 0; font-size: 0.92rem; color: var(--ink-soft); }
+
+  /* ---------- boundaries list ---------- */
+  .boundary-list{ list-style: none; margin: 1.2rem 0; padding: 0; display: flex; flex-direction: column; gap: 0.8rem; }
+  .boundary-list li{
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: 0.4rem 1rem;
+    padding: 0.85rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+  @media (max-width: 560px){ .boundary-list li{ grid-template-columns: 1fr; } }
+  .boundary-list .b-term{ font-weight: 600; color: var(--accent-strong); font-size: 0.92rem; }
+  .boundary-list .b-desc{ margin: 0; font-size: 0.92rem; color: var(--ink-soft); }
+
+  /* ---------- legal exceptions ---------- */
+  .legal-list{ display: flex; flex-direction: column; gap: 0.9rem; margin: 1.2rem 0 1.6rem; }
+  .legal-item{
+    display: grid;
+    grid-template-columns: 2.4rem 1fr;
+    gap: 0.9rem;
+    align-items: start;
+  }
+  .legal-num{
+    font-family: "Fraunces", serif;
+    font-weight: 500;
+    font-size: 1.5rem;
+    color: var(--gold);
+    line-height: 1.2;
+  }
+  .legal-item h4{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 0.15rem 0 0.3rem;
+  }
+  .legal-item p{ margin: 0; font-size: 0.94rem; color: var(--ink-soft); }
+
+  /* ---------- forms list ---------- */
+  .forms-list{ list-style: none; margin: 1.2rem 0; padding: 0; display: flex; flex-direction: column; gap: 0.55rem; }
+  .forms-list li{
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+    padding: 0.7rem 0.9rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 0.93rem;
+  }
+  .forms-list a{ font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; white-space: nowrap; }
+
+  /* ---------- crisis callout ---------- */
+  .crisis-box{
+    background: var(--crisis-bg);
+    border: 1px solid var(--crisis-line);
+    border-left: 4px solid var(--crisis);
+    border-radius: 8px;
+    padding: 1.5rem 1.6rem;
+    margin: 1.6rem 0;
+  }
+  .crisis-box .eyebrow{ color: var(--crisis); }
+  .crisis-rows{ display: flex; flex-direction: column; gap: 0.7rem; margin-top: 0.8rem; }
+  .crisis-row{ display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+  .crisis-row .c-label{ color: var(--ink-soft); font-size: 0.92rem; }
+  .crisis-row .c-value{
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 500;
+    font-size: 1.15rem;
+    color: var(--crisis);
+  }
+  .crisis-avail{
+    margin-top: 1rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .callout-note{
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    margin: 1.2rem 0;
+  }
+
+  /* ---------- placeholder flag ---------- */
+  .tbd{
+    display: inline-block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.85em;
+    color: var(--tbd);
+    background: var(--tbd-bg);
+    border: 1px dashed var(--tbd-line);
+    border-radius: 4px;
+    padding: 0.05em 0.5em;
+  }
+
+  /* ---------- rights / responsibilities ---------- */
+  .rr-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; margin: 1.4rem 0 1.6rem; }
+  @media (max-width: 640px){ .rr-grid{ grid-template-columns: 1fr; } }
+  .rr-col h4.subsub{ margin-top: 0; }
+  .rr-col ul{ margin: 0; padding-left: 1.15em; }
+  .rr-col li{ margin: 0.5em 0; font-size: 0.94rem; }
+
+  .steps{ display: flex; flex-direction: column; gap: 0.7rem; margin: 1.2rem 0 1.6rem; }
+  .step{
+    display: grid; grid-template-columns: 2.2rem 1fr; gap: 0.8rem;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+    align-items: baseline;
+  }
+  .step .s-num{ font-family: "IBM Plex Mono", monospace; color: var(--gold); font-weight: 500; }
+  .step p{ margin: 0; font-size: 0.94rem; }
+
+  .not-penalized{
+    text-align: center;
+    font-family: "Fraunces", serif;
+    font-style: italic;
+    color: var(--accent-strong);
+    font-size: 1.05rem;
+    margin: 1.6rem 0;
+  }
+
+  /* ---------- contact section ---------- */
+  .contact-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+    margin: 1.4rem 0 1.6rem;
+  }
+  .contact-card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 1.1rem 1.2rem;
+  }
+  .contact-card h4{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 0.6em;
+  }
+  .contact-card p{ margin: 0.3em 0; font-size: 0.94rem; }
+
+  /* ---------- acknowledgment ---------- */
+  .ack{
+    background: var(--surface-raised);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 2rem 2.2rem;
+    margin-top: 1.4rem;
+    box-shadow: var(--shadow);
+  }
+  .sig-line{ margin: 1.6rem 0 0.3rem; border-bottom: 1px solid var(--ink-faint); padding-bottom: 2rem; position: relative; }
+  .sig-line .sig-label{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .ack-note{ margin-top: 1.4rem; font-size: 0.88rem; color: var(--ink-faint); }
+
+  footer.doc-footer{
+    max-width: 680px;
+    margin: 3rem 0 0;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
+
+  /* ---------- print ---------- */
+  @media print{
+    .side, .print-btn, .skip-link{ display: none !important; }
+    .shell{ display: block; }
+    body{ background: #fff; color: #000; font-size: 11.5pt; }
+    .cover{ background: none; border-bottom: 1px solid #999; }
+    section.doc-section{ break-inside: avoid-page; }
+    a{ color: #000; text-decoration: underline; }
+    .crisis-box, .service-card, .panel, .principle, .ack{ box-shadow: none; }
+  }
+</style>
+
+<a class="skip-link" href="#main-content">Skip to handbook content</a>
+
+<div class="cover">
+  <div class="cover-inner">
+    <div class="brandmark">
+      <img class="brand-icon" alt="Thrive logo" src="data:image/png;base64,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" />
+      <span class="wordmark">Thrive Peer Support</span>
+    </div>
+    <h1>Client Handbook</h1>
+    <p class="tagline">Welcome to your recovery journey.</p>
+    <p style="max-width:52ch; color:var(--ink-soft); margin-top:0.9rem;">Outpatient Treatment · Case Management · Peer Support</p>
+    <div class="cover-meta">
+      <span>Effective Date: October 1, 2025</span>
+      <span>10 sections + acknowledgment</span>
+    </div>
+    <button class="print-btn" onclick="window.print()" type="button">⤓ Print or save as PDF</button>
+  </div>
+</div>
+
+<div class="shell">
+  <aside class="side">
+    <div class="side-sticky">
+      <details class="toc-mobile" open>
+        <summary>On this page</summary>
+        <nav class="toc" aria-label="Table of contents" style="margin-top:0.8rem;">
+          <ol>
+            <li><a href="#s1">Welcome to Thrive</a></li>
+            <li><a href="#s2">Understanding Our Services</a></li>
+            <li><a href="#s3">Outpatient Treatment Services</a></li>
+            <li><a href="#s4">Case Management Services</a></li>
+            <li><a href="#s5">Peer Support Services</a></li>
+            <li><a href="#s6">Mutual Respect &amp; Boundaries</a></li>
+            <li><a href="#s7">Privacy &amp; Confidentiality</a></li>
+            <li><a href="#s8">Crisis Support &amp; Safety</a></li>
+            <li><a href="#s9">Rights &amp; Responsibilities</a></li>
+            <li><a href="#s10">How to Contact Us</a></li>
+            <li class="toc-ack"><a href="#ack">Acknowledgment</a></li>
+          </ol>
+        </nav>
+      </details>
+    </div>
+  </aside>
+
+  <main id="main-content">
+    <div class="prose">
+
+      <section class="doc-section" id="s1">
+        <span class="eyebrow">Section 01</span>
+        <h2>Welcome to Thrive</h2>
+        <p class="lede">Welcome! We're glad you're here.</p>
+        <p>At Thrive, we believe in your ability to live a meaningful, fulfilling life in recovery. Whether you're receiving outpatient treatment, case management services, or working with a Peer Recovery Specialist, our team is here to support you in achieving your personal goals.</p>
+        <h4 class="subsub">This handbook will help you understand</h4>
+        <ul class="plain">
+          <li>Our three service lines and what each provides</li>
+          <li>What you can expect during your time with us</li>
+          <li>How we'll work together toward your goals</li>
+          <li>Important guidelines that keep everyone safe</li>
+          <li>Service limitations and timelines</li>
+          <li>Your rights as a client</li>
+        </ul>
+        <p>We're excited to partner with you on your recovery journey.</p>
+      </section>
+
+      <section class="doc-section" id="s2">
+        <span class="eyebrow">Section 02</span>
+        <h2>Understanding Our Services</h2>
+        <p>Thrive offers three distinct service lines to support your recovery journey. Each service is designed to meet different needs and provide specific types of support.</p>
+
+        <div class="service-glance">
+          <h4 class="subsub">At a glance: our service lines</h4>
+          <div class="service-grid">
+            <div class="service-card">
+              <h4 class="card-title">Outpatient Treatment</h4>
+              <div class="field"><span class="field-label">What it is</span><p class="field-body">Clinical therapy services provided by licensed professionals</p></div>
+              <div class="field"><span class="field-label">Who provides it</span><p class="field-body">Licensed mental health professionals</p></div>
+              <div class="field"><span class="field-label">Best for</span><p class="field-body">Addressing mental health or substance use challenges through individual therapy</p></div>
+            </div>
+            <div class="service-card">
+              <h4 class="card-title">Case Management</h4>
+              <div class="field"><span class="field-label">What it is</span><p class="field-body">Coordination and navigation support to connect you with community resources and services</p></div>
+              <div class="field"><span class="field-label">Who provides it</span><p class="field-body">Trained case managers</p></div>
+              <div class="field"><span class="field-label">Best for</span><p class="field-body">Navigating systems, accessing resources, and coordinating multiple services</p></div>
+            </div>
+            <div class="service-card">
+              <h4 class="card-title">Peer Support</h4>
+              <div class="field"><span class="field-label">What it is</span><p class="field-body">Support from someone with lived recovery experience who walks alongside you on your journey</p></div>
+              <div class="field"><span class="field-label">Who provides it</span><p class="field-body">Certified Peer Recovery Specialists with personal recovery experience</p></div>
+              <div class="field"><span class="field-label">Best for</span><p class="field-body">Building recovery skills, connecting with community, and receiving hope-based support</p></div>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="sub">How Services Are Funded</h3>
+        <p>Thrive services are primarily funded through Medicaid. We also have a few other funding sources available. Your provider can discuss payment and coverage options with you.</p>
+        <p>Thrive does not currently operate a self-pay program, so if your services are covered by Medicaid or another funding source, you should not receive a bill from us. If your coverage ever changes, or if Thrive adds self-pay or sliding-fee-scale options in the future, we'll explain any fees and payment options clearly before you're billed for anything.</p>
+        <p class="callout-note">Federal law (the No Surprises Act) protects patients from unexpected medical bills, including the right to a Good Faith Estimate of expected charges if you're ever uninsured or paying out of pocket. Because Thrive doesn't currently bill clients directly, this typically won't apply to your care with us — but ask your provider if you have questions about costs.</p>
+      </section>
+
+      <section class="doc-section" id="s3">
+        <span class="eyebrow">Section 03</span>
+        <h2>Outpatient Treatment Services</h2>
+
+        <h3 class="sub">What Is Outpatient Treatment?</h3>
+        <p>Outpatient treatment provides clinical therapy services from licensed mental health professionals. This structured support helps you address mental health challenges, substance use concerns, and develop healthy coping strategies through individual therapy sessions.</p>
+
+        <div class="twoup">
+          <div class="panel yes">
+            <div class="panel-head">Provides</div>
+            <ul>
+              <li>Individual therapy sessions with licensed providers</li>
+              <li>Evidence-based treatment approaches (CBT, DBT, motivational interviewing, etc.)</li>
+              <li>Treatment planning and clinical assessments</li>
+              <li>Coordination with other healthcare providers</li>
+              <li>Progress monitoring and outcome measurement</li>
+            </ul>
+          </div>
+          <div class="panel no">
+            <div class="panel-head">Does not provide</div>
+            <ul>
+              <li>24/7 crisis response or crisis intervention services</li>
+              <li>Group therapy</li>
+              <li>Medication prescribing (you'll need a psychiatrist or medical provider)</li>
+              <li>Inpatient or residential treatment</li>
+              <li>Medical detoxification services</li>
+              <li>Transportation or housing assistance</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="sub">Service Expectations &amp; Timelines</h3>
+        <div class="expect-grid">
+          <div class="expect-block">
+            <h4>Session frequency</h4>
+            <ul>
+              <li>Determined by your individual needs, medical necessity, and treatment plan</li>
+              <li>Sessions are typically 45–60 minutes</li>
+              <li>Your provider will work with you to determine the right frequency</li>
+            </ul>
+          </div>
+          <div class="expect-block">
+            <h4>Progress reviews</h4>
+            <ul>
+              <li>Progress reviewed regularly with your provider and/or a member of the clinical team</li>
+              <li>Treatment plans reviewed and updated at least every 90 days</li>
+            </ul>
+          </div>
+          <div class="expect-block">
+            <h4>Cancellation policy</h4>
+            <ul>
+              <li>Please provide 24 hours notice for cancellations when possible</li>
+              <li>Multiple no-shows may affect your continued services</li>
+            </ul>
+          </div>
+          <div class="expect-block">
+            <h4>Returning to services</h4>
+            <p>If you complete services and later feel you need support again, you can reconnect with us. You will be assessed for need and appropriateness of services.</p>
+          </div>
+        </div>
+
+        <h4 class="subsub">Service discontinuation — treatment may conclude when</h4>
+        <ul class="plain">
+          <li>You've achieved your treatment goals</li>
+          <li>You request to end services</li>
+          <li>You miss appointments for 60 days despite outreach attempts</li>
+          <li>You need a different level of care (we'll help connect you)</li>
+          <li>Your behavior compromises the safety of the agency or provider</li>
+        </ul>
+      </section>
+
+      <section class="doc-section" id="s4">
+        <span class="eyebrow">Section 04</span>
+        <h2>Case Management Services</h2>
+
+        <h3 class="sub">What Is Case Management?</h3>
+        <p>Case management helps you navigate complex systems, access community resources, and coordinate the various services you need. Your case manager serves as your advocate and guide in connecting with support.</p>
+
+        <div class="twoup">
+          <div class="panel yes">
+            <div class="panel-head">Provides</div>
+            <ul>
+              <li>Assessment of your needs and available resources</li>
+              <li>Connection to community services (housing, employment, healthcare, etc.)</li>
+              <li>Coordination between multiple service providers</li>
+              <li>Assistance with applications and paperwork</li>
+              <li>Advocacy and support in navigating systems</li>
+              <li>Regular follow-up to ensure services are meeting your needs</li>
+              <li>Crisis planning and problem-solving</li>
+            </ul>
+          </div>
+          <div class="panel no">
+            <div class="panel-head">Does not provide</div>
+            <ul>
+              <li>Clinical therapy</li>
+              <li>Crisis intervention services</li>
+              <li>Direct financial assistance</li>
+              <li>Transportation services</li>
+              <li>Housing placement (we help you connect to housing resources)</li>
+              <li>Legal services or medical care</li>
+              <li>24/7 availability</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="sub">Service Expectations &amp; Timelines</h3>
+        <div class="expect-grid">
+          <div class="expect-block">
+            <h4>Contact frequency</h4>
+            <ul>
+              <li>Determined by your individual needs, medical necessity, and service plan</li>
+              <li>Minimum of bi-weekly contact (every two weeks) for most clients</li>
+              <li>Contact may be in-person, by phone, or virtual</li>
+            </ul>
+          </div>
+          <div class="expect-block">
+            <h4>Response times</h4>
+            <ul>
+              <li>Routine inquiries: 1–2 business days</li>
+              <li>Urgent (non-emergency) matters: within 1 business day</li>
+              <li>Crisis situations: contact Mobile Crisis or 911</li>
+            </ul>
+          </div>
+          <div class="expect-block">
+            <h4>Progress reviews</h4>
+            <ul>
+              <li>Progress reviewed regularly with your case manager and/or a member of the clinical team</li>
+              <li>Service plans reviewed and updated at least every 90 days</li>
+            </ul>
+          </div>
+          <div class="expect-block">
+            <h4>Returning to services</h4>
+            <p>If you complete services and later feel you need support again, you can reconnect with us. You will be assessed for need and appropriateness of services.</p>
+          </div>
+        </div>
+
+        <h4 class="subsub">Service discontinuation — case management may conclude when</h4>
+        <ul class="plain">
+          <li>You're successfully connected to needed services</li>
+          <li>You're able to independently navigate systems</li>
+          <li>You request to end services</li>
+          <li>You don't respond to contact for 60 days (after three attempts)</li>
+          <li>Your behavior compromises the safety of the agency or provider</li>
+        </ul>
+      </section>
+
+      <section class="doc-section" id="s5">
+        <span class="eyebrow">Section 05</span>
+        <h2>Peer Support Services</h2>
+
+        <h3 class="sub">What Is Peer Support?</h3>
+        <p>Peer support is a unique service built on the foundation of shared lived experience. Your Peer Recovery Specialist (PRS) is someone who has navigated their own recovery journey and is now trained to support you in yours.</p>
+
+        <h4 class="subsub">Core principles of peer support</h4>
+        <div class="principle-grid">
+          <div class="principle"><span class="p-title">You are in charge</span><p>This is your recovery journey. You decide what goals matter to you, what support you need, and what steps you want to take.</p></div>
+          <div class="principle"><span class="p-title">It's all about relationships</span><p>The relationship between you and your Peer Recovery Specialist is the foundation of everything we do.</p></div>
+          <div class="principle"><span class="p-title">It's completely voluntary</span><p>You choose to participate. You can take breaks, adjust frequency, or end services at any time.</p></div>
+          <div class="principle"><span class="p-title">Community-centered</span><p>We believe relationships and social connections are essential to recovery.</p></div>
+          <div class="principle"><span class="p-title">Recovery-oriented</span><p>Recovery looks different for everyone. We support multiple pathways to wellness.</p></div>
+          <div class="principle"><span class="p-title">Trauma-informed</span><p>We create a safe space where you feel respected, empowered, and in control.</p></div>
+        </div>
+
+        <div class="twoup">
+          <div class="panel yes">
+            <div class="panel-head">Provides</div>
+            <ul>
+              <li>Shared lived experience and hope</li>
+              <li>Support in identifying and working toward your goals</li>
+              <li>Connection to community resources</li>
+              <li>Life skills development</li>
+              <li>Building natural support systems</li>
+              <li>Celebration of progress and support through challenges</li>
+              <li>Advocacy and system navigation support</li>
+            </ul>
+          </div>
+          <div class="panel no">
+            <div class="panel-head">Does not provide</div>
+            <ul>
+              <li>Clinical therapy</li>
+              <li>Medical advice or treatment</li>
+              <li>Crisis intervention services</li>
+              <li>24/7 availability</li>
+              <li>Financial assistance or transportation</li>
+              <li>Decisions about your recovery (you're always in charge)</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="sub">Service Expectations &amp; Timelines</h3>
+        <div class="expect-grid">
+          <div class="expect-block">
+            <h4>Contact frequency</h4>
+            <ul>
+              <li>Determined by your individual needs, medical necessity, and treatment plan</li>
+              <li>Minimum weekly contact for most clients (phone, text, or in-person/virtual meeting)</li>
+              <li>Flexible scheduling based on your needs</li>
+            </ul>
+          </div>
+          <div class="expect-block">
+            <h4>Response times</h4>
+            <ul>
+              <li>Non-urgent messages: 1–2 business days</li>
+              <li>Crisis situations: contact Mobile Crisis or 911</li>
+            </ul>
+          </div>
+          <div class="expect-block">
+            <h4>Progress reviews</h4>
+            <ul>
+              <li>Progress reviewed regularly with your PRS and/or a member of the clinical team</li>
+              <li>Treatment plans reviewed and updated at least every 90 days</li>
+            </ul>
+          </div>
+          <div class="expect-block">
+            <h4>Typical assignment</h4>
+            <ul>
+              <li>One Peer Recovery Specialist per client (for consistency)</li>
+              <li>In special circumstances (major transitions), a second PRS may be temporarily assigned</li>
+            </ul>
+          </div>
+        </div>
+
+        <h4 class="subsub">Graduation — you may be ready when</h4>
+        <ul class="plain">
+          <li>You've achieved your treatment plan goals</li>
+          <li>You have a strong support system in place</li>
+          <li>You feel confident managing your recovery independently</li>
+          <li>You no longer need this level of support</li>
+        </ul>
+
+        <h4 class="subsub">Service discontinuation — services may conclude if</h4>
+        <ul class="plain">
+          <li>You've successfully graduated</li>
+          <li>You request to end services</li>
+          <li>No response for 3 consecutive weeks (we'll reach out to check in)</li>
+          <li>No contact for 60 days after three outreach attempts</li>
+          <li>You need a different level of care</li>
+          <li>Your behavior compromises the safety of the agency or provider</li>
+        </ul>
+
+        <p style="font-style:italic; color:var(--ink-soft);">Recovery isn't linear. If you complete services and later feel you need support again, you can reconnect with us. You will be assessed for need and appropriateness of services.</p>
+      </section>
+
+      <section class="doc-section" id="s6">
+        <span class="eyebrow">Section 06</span>
+        <h2>Mutual Respect and Professional Boundaries</h2>
+        <span class="applies-all">Applies to all services</span>
+
+        <h3 class="sub">Our Mutual Respect Agreement</h3>
+        <p>At Thrive, we believe in treating everyone with dignity and respect. We have a mutual respect agreement that guides our interactions:</p>
+        <ul class="plain">
+          <li>We commit to treating you with respect, compassion, and professionalism</li>
+          <li>We ask that you treat our staff with the same respect</li>
+          <li>We maintain a safe environment for everyone</li>
+          <li>Behaviors that compromise safety will result in service discontinuation</li>
+        </ul>
+
+        <h3 class="sub">Professional Boundaries We Maintain</h3>
+        <p>To maintain healthy, professional relationships that serve your recovery, all Thrive staff follow these important boundaries:</p>
+        <ul class="boundary-list">
+          <li><span class="b-term">Meeting locations</span><p class="b-desc">We meet in locations that are safe and comfortable for both you and your provider. This may include community locations, our office, your home (when appropriate), or via secure telehealth. Meeting location decisions are based on safety and comfort of both client and provider.</p></li>
+          <li><span class="b-term">No money exchange</span><p class="b-desc">We don't give, lend, or accept money.</p></li>
+          <li><span class="b-term">No gift exchange</span><p class="b-desc">We can't exchange gifts to maintain professional boundaries.</p></li>
+          <li><span class="b-term">Social media</span><p class="b-desc">We don't connect on personal social media during active services.</p></li>
+          <li><span class="b-term">Consistent service</span><p class="b-desc">We provide the same quality of care to all clients.</p></li>
+          <li><span class="b-term">Professional focus</span><p class="b-desc">We keep our relationship focused on your recovery goals.</p></li>
+        </ul>
+        <p style="font-style:italic; color:var(--ink-soft);">These boundaries protect you and ensure our relationship stays focused on supporting your recovery.</p>
+
+        <h3 class="sub">Telehealth Consent</h3>
+        <p>Some Thrive services may be offered by secure telehealth (video or phone) instead of in person. By participating in telehealth, you're agreeing to a few things:</p>
+        <ul class="plain">
+          <li>Telehealth carries the same privacy protections as in-person care, but you're responsible for finding a private location on your end where others can't overhear your session</li>
+          <li>As with any technology, there's a small risk of technical failure or interruption; if that happens, your provider will follow up to reschedule or reconnect</li>
+          <li>You can request in-person services instead of telehealth at any time, without it affecting your care</li>
+          <li>You'll need a private, stable internet or phone connection and a device that supports video or audio calls</li>
+        </ul>
+        <p>Your provider will review telehealth-specific consent with you before your first virtual session.</p>
+      </section>
+
+      <section class="doc-section" id="s7">
+        <span class="eyebrow">Section 07</span>
+        <h2>Your Privacy and Confidentiality</h2>
+        <p class="lede">Keeping your information safe.</p>
+        <p>Your privacy is extremely important to us. Everything you share is confidential and protected under federal law (HIPAA).</p>
+
+        <h4 class="subsub">What this means</h4>
+        <ul class="plain">
+          <li>We won't share information about you without your written permission</li>
+          <li>Your records are kept secure and private</li>
+          <li>We only discuss your case with our clinical team as needed for your care</li>
+          <li>We won't acknowledge you in public unless you acknowledge us first</li>
+        </ul>
+
+        <h3 class="sub">When We Must Share Information (Legal Exceptions)</h3>
+        <div class="legal-list">
+          <div class="legal-item">
+            <span class="legal-num">1</span>
+            <div><h4>Safety concerns</h4><p>If you're planning to seriously hurt yourself or someone else, we must take action to keep everyone safe.</p></div>
+          </div>
+          <div class="legal-item">
+            <span class="legal-num">2</span>
+            <div><h4>Child abuse or neglect</h4><p>If a child is being abused or neglected, we must report it to Children Services.</p></div>
+          </div>
+          <div class="legal-item">
+            <span class="legal-num">3</span>
+            <div><h4>Elder or dependent adult abuse</h4><p>If an elderly person (60+) or dependent adult is being abused, we must report it.</p></div>
+          </div>
+          <div class="legal-item">
+            <span class="legal-num">4</span>
+            <div><h4>Court orders</h4><p>If a court orders us to share your records, we must comply. For substance use treatment records specifically, federal law requires a special court order that meets additional legal standards — a routine subpoena is not enough on its own (see 42 CFR Part 2, below).</p></div>
+          </div>
+        </div>
+
+        <h3 class="sub">Extra Protection for Substance Use Treatment Records (42 CFR Part 2)</h3>
+        <p>Because Thrive receives federal and Medicaid funding and provides substance use diagnosis, treatment, or referral, your substance use treatment records are protected by a federal law called 42 CFR Part 2 — in addition to HIPAA. Part 2 is stricter than HIPAA in several ways:</p>
+        <ul class="plain">
+          <li>We generally cannot disclose that you are receiving substance use treatment at Thrive, or share any related records, without your specific written consent — even to other medical providers, family members, or insurers</li>
+          <li>Any information we're permitted to share comes with a legal notice prohibiting the recipient from redisclosing it further without your separate consent</li>
+          <li>Your substance use records generally cannot be used against you in a criminal investigation or prosecution without a special court order</li>
+          <li>These protections continue to apply even if you stop receiving services at Thrive</li>
+        </ul>
+        <p class="callout-note">The legal exceptions listed above (safety concerns, child abuse or neglect, elder/dependent adult abuse) still apply. If you have questions about how Part 2 affects your specific situation, ask your provider — they can walk through what this means for you.</p>
+
+        <h3 class="sub">Sharing Information With Your Permission</h3>
+        <p>To coordinate with other providers, you'll sign a Release of Information (ROI) form specifying:</p>
+        <ul class="plain">
+          <li>Who we can share information with</li>
+          <li>What type of information we can share</li>
+          <li>How long the authorization lasts</li>
+        </ul>
+        <p>You can cancel this permission at any time.</p>
+
+        <h3 class="sub">Important Forms and Links</h3>
+        <ul class="forms-list">
+          <li><span>HIPAA Agreement and Consent to Treat</span><a href="https://thrivepeersupport.jotform.com/92133737943159" target="_blank" rel="noopener">Open form ↗</a></li>
+          <li><span>Release of Information Form</span><a href="https://thrivepeersupport.jotform.com/200486572059055" target="_blank" rel="noopener">Open form ↗</a></li>
+          <li><span>ROI Revocation Form</span><a href="https://hipaa.jotform.com/200754562959061" target="_blank" rel="noopener">Open form ↗</a></li>
+          <li><span>Self-Referral Form</span><a href="https://thrivepeersupport.com/refer-yourself/" target="_blank" rel="noopener">Open form ↗</a></li>
+          <li><span>Client Rights and Grievances</span><a href="https://thrivepeersupport.com/clients-rights-grievances/" target="_blank" rel="noopener">Open page ↗</a></li>
+          <li><span>Medical Records Request Form</span><a href="https://thrivepeersupport.jotform.com/mphillips/medical-records-request-form" target="_blank" rel="noopener">Open form ↗</a></li>
+        </ul>
+        <p style="font-size:0.9rem; color:var(--ink-soft);">Once we receive a completed records request, HIPAA requires us to respond within 30 days (with one 30-day extension allowed if needed).</p>
+      </section>
+
+      <section class="doc-section" id="s8">
+        <span class="eyebrow">Section 08</span>
+        <h2>Crisis Support and Safety</h2>
+        <p class="lede">Getting help when you need it most.</p>
+
+        <div class="crisis-box">
+          <span class="eyebrow">Crisis resources</span>
+          <div class="crisis-rows">
+            <div class="crisis-row"><span class="c-label">Suicide &amp; Crisis Lifeline</span><span class="c-value">Call or text 988</span></div>
+            <div class="crisis-row"><span class="c-label">Mobile Crisis Team</span><span class="c-value">Call or text 988</span></div>
+            <div class="crisis-row"><span class="c-label">Emergency</span><span class="c-value">Call 911</span></div>
+          </div>
+          <div class="crisis-avail">Available 24/7</div>
+        </div>
+
+        <p class="callout-note"><strong>Thrive serves clients across multiple Ohio counties</strong>, and the local Mobile Crisis Team differs by county. Calling or texting 988 connects you with Ohio's Suicide &amp; Crisis Lifeline, which coordinates with the mobile crisis team for your area — you don't need to know the number in advance. Your provider will also give you the direct Mobile Crisis contact for your county at the start of services.</p>
+
+        <p class="callout-note"><strong>Important:</strong> Thrive does not provide crisis intervention services or 24/7 crisis response. For emergencies, always contact Mobile Crisis, call 988, or call 911.</p>
+
+        <h3 class="sub">How Thrive Can Help With Crisis Situations</h3>
+        <p>While we don't provide crisis intervention, we can:</p>
+        <ul class="plain">
+          <li>Assist you in contacting Mobile Crisis or other crisis resources</li>
+          <li>Support you in creating a personal safety plan</li>
+          <li>Follow up with you after a crisis to support your ongoing recovery</li>
+          <li>Help you strengthen coping skills and identify warning signs</li>
+        </ul>
+      </section>
+
+      <section class="doc-section" id="s9">
+        <span class="eyebrow">Section 09</span>
+        <h2>Your Rights and Responsibilities</h2>
+
+        <h3 class="sub">Language Access and Interpreter Services</h3>
+        <p>Thrive provides free interpreter and translation services for clients who need them, including American Sign Language and support in your preferred spoken language. This is available for sessions, phone calls, and written materials on request — just let your provider or our office know, and we'll arrange it. You should never have to rely on a family member or friend to interpret for you unless you choose to.</p>
+
+        <div class="rr-grid">
+          <div class="rr-col">
+            <h4 class="subsub">Your rights as a client</h4>
+            <ul class="plain">
+              <li>Be free from abuse, neglect, and exploitation by anyone, including Thrive staff</li>
+              <li>Be treated with dignity, respect, and compassion</li>
+              <li>Receive services regardless of race, color, religion, sex, age, national origin, disability, sexual orientation, or gender identity</li>
+              <li>Receive free interpreter services and materials in your preferred language</li>
+              <li>Make your own decisions about your recovery</li>
+              <li>Refuse any service or support without penalty</li>
+              <li>Privacy and confidentiality (with legal exceptions noted)</li>
+              <li>Access your treatment records</li>
+              <li>Know who is providing your care</li>
+              <li>Voice concerns or complaints without fear of retaliation</li>
+              <li>Request a different provider if the relationship isn't working</li>
+              <li>End services at any time</li>
+              <li>Participate in creating your treatment plan</li>
+            </ul>
+          </div>
+          <div class="rr-col">
+            <h4 class="subsub">Your responsibilities</h4>
+            <ul class="plain">
+              <li>Communicate openly about your needs</li>
+              <li>Let us know if you need to cancel or reschedule</li>
+              <li>Treat staff with respect</li>
+              <li>Work toward your treatment goals</li>
+              <li>Let us know if something isn't working</li>
+              <li>Respect professional boundaries</li>
+              <li>Provide feedback to help us improve</li>
+              <li>Maintain a safe environment by treating others with respect</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="sub">If You Have a Concern or Complaint</h3>
+        <div class="steps">
+          <div class="step"><span class="s-num">01</span><p><strong>Talk to your provider.</strong> Many concerns can be resolved through direct conversation.</p></div>
+          <div class="step"><span class="s-num">02</span><p><strong>Contact your provider's supervisor.</strong> If direct conversation doesn't resolve the issue.</p></div>
+          <div class="step"><span class="s-num">03</span><p><strong>Contact the director.</strong> For concerns that remain unresolved.</p></div>
+          <div class="step"><span class="s-num">04</span><p><strong>File a formal grievance.</strong> Information available at: <a href="https://thrivepeersupport.com/clients-rights-grievances/" target="_blank" rel="noopener">Client Rights and Grievances ↗</a></p></div>
+        </div>
+        <p class="not-penalized">You will not be penalized for raising concerns.</p>
+
+        <h3 class="sub">External Complaint Resources</h3>
+        <p>If a concern isn't resolved through the steps above, or if you'd rather report it outside of Thrive, you can contact any of the following:</p>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h4>Ohio Dept. of Behavioral Health</h4>
+            <p>State licensing agency for behavioral health providers (formerly OhioMHAS)</p>
+            <p>Phone: 614-466-2596</p>
+            <p><a href="https://dbh.ohio.gov/supporting-providers/licensure-and-certification/file-a-complaint-about-a-provider" target="_blank" rel="noopener">File a complaint online ↗</a></p>
+          </div>
+          <div class="contact-card">
+            <h4>Ohio Medicaid Consumer Hotline</h4>
+            <p>For concerns about Medicaid-funded services</p>
+            <p>Phone: 1-800-324-8680</p>
+            <p>Mon–Fri 7 AM–8 PM, Sat 8 AM–5 PM ET</p>
+          </div>
+          <div class="contact-card">
+            <h4>CARF International</h4>
+            <p>Thrive's accrediting body</p>
+            <p>Phone: 1-866-510-2273</p>
+            <p><a href="https://carf.org/accreditation/public/" target="_blank" rel="noopener">File a complaint online ↗</a></p>
+          </div>
+        </div>
+
+        <h3 class="sub">Requesting a Different Provider</h3>
+        <p>If the relationship isn't working, you can request a different provider. When you request a change, we will inquire about your reasons to better ensure appropriateness of the match and improve our services.</p>
+        <ul class="plain">
+          <li>Contact the appropriate director or supervisor</li>
+          <li>Reassignment completed as soon as possible</li>
+          <li>Services continue without interruption</li>
+        </ul>
+
+        <h3 class="sub">Advance Directives</h3>
+        <p>You have the right to create an advance directive — a legal document that states your wishes for care if you're ever unable to speak for yourself. This includes a psychiatric advance directive (PAD), which lets you document your preferences for mental health treatment, medications, and hospitalization in advance, and name someone you trust to make decisions on your behalf.</p>
+        <p>Thrive doesn't require you to have an advance directive, and we won't condition services on whether you do. If you already have one, let your provider know so we can keep a copy in your file and honor it. If you'd like help creating one, ask your provider — they can point you to Ohio-specific forms and resources.</p>
+
+        <h3 class="sub">Research and Experimental Procedures</h3>
+        <p>Thrive is not currently conducting any research studies or offering experimental treatment. If that ever changes, you would be fully informed about the research, its purpose, and any risks or benefits, and asked to give separate, written, voluntary consent before participating. Declining to participate in research never affects your access to regular services.</p>
+      </section>
+
+      <section class="doc-section" id="s10">
+        <span class="eyebrow">Section 10</span>
+        <h2>How to Contact Us</h2>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h4>Main office</h4>
+            <p>Phone: 216-220-8774</p>
+            <p>Fax: 216-220-3204</p>
+            <p>Email: <a href="mailto:info@thrivepeersupport.com">info@thrivepeersupport.com</a></p>
+            <p>Hours: Monday–Friday, 8:00 AM – 5:00 PM</p>
+          </div>
+          <div class="contact-card">
+            <h4>Website</h4>
+            <p><a href="https://thrivepeersupport.com" target="_blank" rel="noopener">thrivepeersupport.com ↗</a></p>
+          </div>
+          <div class="contact-card">
+            <h4>Your provider</h4>
+            <p>Your therapist, case manager, or peer recovery specialist will provide direct contact information.</p>
+          </div>
+          <div class="contact-card">
+            <h4>Crisis resources</h4>
+            <p>Mobile Crisis: call or text 988 (connects you to your county team)</p>
+            <p>Suicide &amp; Crisis Lifeline: call or text 988</p>
+            <p>Emergency: call 911</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="doc-section" id="ack">
+        <span class="eyebrow">Acknowledgment</span>
+        <h2>Handbook Acknowledgment</h2>
+        <div class="ack">
+          <p>I acknowledge that I have received and reviewed the Thrive Client Handbook.</p>
+          <div class="sig-line"><span class="sig-label">Client name (print)</span></div>
+          <div class="sig-line"><span class="sig-label">Client signature</span></div>
+          <div class="sig-line" style="max-width:16rem;"><span class="sig-label">Date</span></div>
+          <p class="ack-note">For questions about this handbook or Thrive services, call our main office at 216-220-8774.</p>
+        </div>
+      </section>
+
+      <footer class="doc-footer">
+        © 2025 Thrive Peer Support. All rights reserved.
+      </footer>
+
+    </div>
+  </main>
+</div>
