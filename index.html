@@ -270,8 +270,10 @@
   nav.toc a:hover{ background: var(--accent-soft); color: var(--ink); }
   nav.toc .toc-ack a::before{ content: "—"; }
 
+  .toc-desktop{ display: block; }
   details.toc-mobile{ display: none; }
   @media (max-width: 900px){
+    .toc-desktop{ display: none; }
     details.toc-mobile{ display: block; }
     details.toc-mobile summary{
       cursor: pointer;
@@ -656,7 +658,25 @@
 <div class="shell">
   <aside class="side">
     <div class="side-sticky">
-      <details class="toc-mobile" open>
+      <div class="toc-desktop">
+        <div class="toc-title">On this page</div>
+        <nav class="toc" aria-label="Table of contents">
+          <ol>
+            <li><a href="#s1">Welcome to Thrive</a></li>
+            <li><a href="#s2">Understanding Our Services</a></li>
+            <li><a href="#s3">Outpatient Treatment Services</a></li>
+            <li><a href="#s4">Case Management Services</a></li>
+            <li><a href="#s5">Peer Support Services</a></li>
+            <li><a href="#s6">Mutual Respect &amp; Boundaries</a></li>
+            <li><a href="#s7">Privacy &amp; Confidentiality</a></li>
+            <li><a href="#s8">Crisis Support &amp; Safety</a></li>
+            <li><a href="#s9">Rights &amp; Responsibilities</a></li>
+            <li><a href="#s10">How to Contact Us</a></li>
+            <li class="toc-ack"><a href="#ack">Acknowledgment</a></li>
+          </ol>
+        </nav>
+      </div>
+      <details class="toc-mobile">
         <summary>On this page</summary>
         <nav class="toc" aria-label="Table of contents" style="margin-top:0.8rem;">
           <ol>
